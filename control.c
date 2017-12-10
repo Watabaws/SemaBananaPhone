@@ -8,8 +8,8 @@
 #include <sys/sem.h>
 #include <sys/shm.h>
 
-int SEM_KEY = 230957;
-int SHM_KEY = 129030;
+int SEM_KEY = 230955;
+int SHM_KEY = 129032;
 
 int main(int argc, char * argv[]){
 
@@ -42,8 +42,9 @@ int main(int argc, char * argv[]){
 
 	else if(!strcmp(argv[1], "-v")){
 		int filed = open("story.txt", O_RDONLY, 0755);
-		char story[256];
-		read(filed, story, sizeof(story));
+		char story[2056];
+		int read_size = read(filed, story, sizeof(story));
+		story[read_size] = 0;
 		printf("Here's your story:\n%s\n", story);
 		close(filed);
 	}
@@ -59,7 +60,7 @@ int main(int argc, char * argv[]){
 	  sbf[0].sem_num = 0;
 	  sbf[0].sem_op = -1;
 	  sbf[0].sem_flg = SEM_UNDO;
-	  semop(semd, sbf, 3);
+	  semop(semd, sbf, 1);
 
 		read(filed, story , sizeof(story));
 		semctl(semd, 0, IPC_RMID);

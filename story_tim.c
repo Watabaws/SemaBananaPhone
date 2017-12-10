@@ -27,14 +27,13 @@ int main(){
   sbf[0].sem_op = -1;
   sbf[0].sem_flg = SEM_UNDO;
 
-  semop(semd, sbf, 3);
+  semop(semd, sbf, 1);
   char last_line[2056];
 
   int filed = open("story.txt", O_RDONLY);
   //printf("Descriptor: %d\n", filed);
   lseek( filed, *shmem, SEEK_END );
   read(filed, last_line, sizeof(last_line));
-  printerror();
   close(filed);
 
   //printf("last_line: %s\n", last_line);
@@ -56,11 +55,13 @@ int main(){
   int filewd = open("story.txt", O_WRONLY | O_APPEND);
   //printf("Opened file for writing\n");
   int wri_work = write(filed, new_line, *shmem * -1);
-  if(wri_work == -1) printerror();
+  //if(wri_work == -1) printerror();
   close(filed);
 
-  //sbf[0].sem_op = 1;
-  //semop(semd,sbf,3);
+  printf("Line added!\n");
+
+  sbf[0].sem_op = 1;
+  semop(semd,sbf,1);
   shmdt(shmem);
 
 }
