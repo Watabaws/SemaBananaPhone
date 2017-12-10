@@ -31,13 +31,13 @@ int main(){
   char last_line[2056];
 
   int filed = open("story.txt", O_RDONLY);
-  printf("Descriptor: %d\n", filed);
+  //printf("Descriptor: %d\n", filed);
   lseek( filed, *shmem, SEEK_END );
   read(filed, last_line, sizeof(last_line));
   printerror();
   close(filed);
 
-  printf("last_line: %s\n", last_line);
+  //printf("last_line: %s\n", last_line);
 
   printf("Here's the last line of the story: %s \n", last_line);
 
@@ -47,17 +47,14 @@ int main(){
 
   fgets(new_line, sizeof(new_line), stdin);
   char * p = strchr(new_line, '\n');
-  if (p) {
-    *p = 0;
-  }
 
   *shmem = strlen(new_line) * -1;
 
-  printf("Newline is: %s\n", new_line);
-  printf("shmem val: %d\n", *shmem);
+  //printf("Newline is: %s\n", new_line);
+  //printf("shmem val: %d\n", *shmem);
 
   int filewd = open("story.txt", O_WRONLY | O_APPEND);
-  printf("Opened file for writing\n");
+  //printf("Opened file for writing\n");
   int wri_work = write(filed, new_line, *shmem * -1);
   if(wri_work == -1) printerror();
   close(filed);

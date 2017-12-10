@@ -59,8 +59,8 @@ int main(int argc, char * argv[]){
 	  sbf[0].sem_num = 0;
 	  sbf[0].sem_op = -1;
 	  sbf[0].sem_flg = SEM_UNDO;
-
 	  semop(semd, sbf, 3);
+
 		read(filed, story , sizeof(story));
 		semctl(semd, 0, IPC_RMID);
 		printf("Semaphore released.\n");
